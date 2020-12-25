@@ -1,0 +1,25 @@
+
+send
+sniff
+1
+rdpcap
+2
+UDP_PACKETS[0]
+TCP_PACKETS[1][TCP]
+UDP_PACKETS[0][IP]
+echo
+[pkt[Raw].load for pkt in TCP_PACKETS if Raw in pkt]
+19524
+3
+IP(dst="127.127.127.127")/UDP(dport=5000)
+pkt  = IP(dst="127.2.3.4")/UDP(dport=53)/DNS(rd=1,qd=DNSQR(qname="elveslove.santa"))
+
+
+>>> ARP_PACKETS[1].hwsrc='00:13:46:0b:22'
+
+>>> ARP_PACKETS[1].hwdst='00:16:ce:6e:8b:24'
+
+>>> ARP_PACKETS[1].hwsrc='00:13:46:0b:22:ba'
+
+
+cat candump.log | cut -d " " -f3 | cut -d "#" -f1 | sort | uniq
