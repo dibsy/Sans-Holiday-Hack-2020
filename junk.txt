@@ -23,3 +23,30 @@ pkt  = IP(dst="127.2.3.4")/UDP(dport=53)/DNS(rd=1,qd=DNSQR(qname="elveslove.sant
 
 
 cat candump.log | cut -d " " -f3 | cut -d "#" -f1 | sort | uniq
+
+elf@33f1fa7d6ba9:~$ cat candump.log | grep 19B
+(1608926661.626380) vcan0 244#000000019B
+(1608926662.390980) vcan0 244#000000019B
+(1608926664.626448) vcan0 19B#000000000000
+(1608926667.837300) vcan0 244#00000019BE
+(1608926671.122520) vcan0 19B#00000F000000
+(1608926673.157900) vcan0 244#00000019BE
+(1608926674.092148) vcan0 19B#000000000000
+elf@33f1fa7d6ba9:~$ ./runtoanswer 
+There are two LOCK codes and one UNLOCK code in the log.  What is the decimal portion of the UNLOCK timestamp?
+(e.g., if the timestamp of the UNLOCK were 1608926672.391456, you would enter 391456.
+> 626448
+Your answer: 626448
+
+Checking....
+Sorry, that answer is incorrect. Please try again!
+elf@33f1fa7d6ba9:~$ ./runtoanswer 
+There are two LOCK codes and one UNLOCK code in the log.  What is the decimal portion of the UNLOCK timestamp?
+(e.g., if the timestamp of the UNLOCK were 1608926672.391456, you would enter 391456.
+> 122520
+Your answer: 122520
+
+Checking....
+Your answer is correct!
+
+elf@33f1fa7d6ba9:~$ 
