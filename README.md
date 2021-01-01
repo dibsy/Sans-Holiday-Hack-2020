@@ -95,6 +95,18 @@ Who recused herself from the vote described on the document?
 Bypass the Santavator fingerprint sensor. 
 Enter Santa's office without Santa's fingerprint.
 ```
+```
+When Santa logs in the url looks like this
+https://elevator.kringlecastle.com/?challenge=santamode-elevator&id=908e3ccd-114c-XXXX-XXXX-6e222a550aee&username=heckthathack&area=santamode-santavator1&location=1,2&tokens=marble,nut2,nut,candycane,ball,yellowlight,elevator-key,greenlight,redlight,workshop-button,besanta
+
+When the user logs in the url looks like this
+https://elevator.kringlecastle.com/?challenge=santamode-elevator&id=908e3ccd-114c-XXXX-XXXX-6e222a550aee&username=heckthathack&area=santamode-santavator1&location=1,2&tokens=marble,nut2,nut,candycane,ball,yellowlight,elevator-key,greenlight,redlight,workshop-button,besanta
+
+The only key difference is one extra parameter that is passed for santa , i.e besanta, so we can modify the html in the iframe something like this
+<iframe title="challenge" src="https://elevator.kringlecastle.com?challenge=elevatorr&amp;id=5dd79c13-81de-48e0-b121-5714ca8ace80&amp;username=heckthathack&amp;area=santavator5&amp;location=1,2&amp;tokens=marble,nut,candycane,elevator-key,redlight,nut2,ball,yellowlight,greenlight,workshop-button,besanta"></iframe>
+```
+<img src="images/gotin.PNG">
+
 ### 11a) Naughty/Nice List with Blockchain Investigation Part 1
 ```
 Even though the chunk of the blockchain that you have ends with block 129996, can you predict the nonce for block 130000? 
