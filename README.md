@@ -24,6 +24,7 @@ What's the password?
 ```
 Talk to Pepper Minstix in the entryway to get some hints about the Santavator.
 ```
+<img src="images/elevator.PNG">
 
 ### 5) Open HID Lock
 ```
