@@ -74,7 +74,7 @@ Based on the observation I noticed ,
 - unusual negative data coming for 080 ID - Brake
 - unusual negative data coming for 019 ID - Steering
 
-Feeding these information to block these ID with such conditions unlocks Santa's sleigh.
+Feeding these information to block these ID with such conditions defrost's Santa's sleigh.
 ```
 <img src="images/sleigh.PNG">
 
