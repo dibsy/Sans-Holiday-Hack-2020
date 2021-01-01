@@ -38,6 +38,41 @@ Jack Frost is somehow inserting malicious messages onto the sleigh's CAN-D bus.
 We need you to exclude the malicious messages and no others to fix the sleigh. 
 Visit the NetWars room on the roof and talk to Wunorse Openslae for hints.
 ```
+```
+Say, do you have any thoughts on what might fix Santa's sleigh?
+Turns out: Santa's sleigh uses a variation of CAN bus that we call CAN-D bus.
+And there's something naughty going on in that CAN-D bus.
+The brakes seem to shudder when I put some pressure on them, and the doors are acting oddly.
+I'm pretty sure we need to filter out naughty CAN-D-ID codes.
+There might even be some valid IDs with invalid data bytes
+```
+```
+First figuring out which CAN-ID associates to which vehicle actions 
+02A#0000FF	; Stop
+02A#00FF00	; Start
+19B#000000000000	;Lock
+19B#00000F000000	;Unlock
+080#000000		;Brake
+188#
+019#			;Steering
+244#			;Acceleration
+
+So I tried the following process for each of the identified CAN ID
+foreach CAN-ID in list{
+  block other CAN-ID in the list,
+  observe the can data,
+  make the movement and validate the logs for each action
+  for any unintended can message, note it down
+  }
+Based on the observation I noticed ,
+- unusual data 0000F2097 coming for 19B ID - Lock
+- unusual negative data coming for 080 ID - Brake
+- unusual negative data coming for 019 ID - Steering
+
+Feeding these information to block these ID with such conditions unlocks Santa's sleigh.
+```
+<img src="images/sleigh.PNG">
+
 ### 8) Broken Tag Generator
 ```
 Help Noel Boetie fix the Tag Generator in the Wrapping Room. 
