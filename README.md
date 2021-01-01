@@ -7,6 +7,9 @@ There is a photo of Santa's Desk on that billboard with his personal gift list.
 What gift is Santa planning on getting Josh Wright for the holidays?
 Talk to Jingle Ringford at the bottom of the mountain for advice.
 ```
+```
+We can untwirl the image, and find the word Proxmark
+```
 ### 2) Investigate S3 Bucket
 ```
 When you unwrap the over-wrapped file, what text string is inside the package? 
@@ -21,6 +24,7 @@ What's the password?
 ```
 Talk to Pepper Minstix in the entryway to get some hints about the Santavator.
 ```
+
 ### 5) Open HID Lock
 ```
 Open the HID lock in the Workshop.
