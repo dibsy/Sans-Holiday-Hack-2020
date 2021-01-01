@@ -4,8 +4,8 @@ strings door
 That would have opened the door!
 Be sure to finish the challenge in prod: And don't forget, the password is "Op3nTheD00r"
 Beep boop invalid password
-
---------------------------------------------------------
+```
+```
 
 Changing the username to the credential
 
