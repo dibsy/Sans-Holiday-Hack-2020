@@ -16,6 +16,33 @@ We can untwirl the image, and find the word Proxmark
 When you unwrap the over-wrapped file, what text string is inside the package? 
 Talk to Shinny Upatree in front of the castle for hints on this challenge.
 ```
+```
+Answer : North Pole: The Frostiest Place on Earth
+```
+```
+elf@bfdda91a4256:~/bucket_finder$ cat wordlist 
+kringlecastle
+wrapper
+santa
+Wrapper3000
+kringle
+kringlecon
+holidayhack
+sansholidayhack
+kringle2020
+wrapper3000
+
+base64 -d package > package2
+unzip package2 
+tar xf package.txt.Z.xz.xxd.tar.bz2
+xxd -r package.txt.Z.xz.xxd package.txt.Z.xz
+unxz package.txt.Z.xz
+tar xf package.txt.Z
+uncompress package.txt.Z
+cat package.txt
+elf@bfdda91a4256:~/bucket_finder/wrapper3000$ cat package.txt
+North Pole: The Frostiest Place on Earth
+```
 ### 3) Point-of-Sale Password Recovery
 ```
 Help Sugarplum Mary in the Courtyard find the supervisor password for the point-of-sale terminal.
