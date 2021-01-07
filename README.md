@@ -337,6 +337,9 @@ Go to the NetWars room on the roof and help Alabaster Snowball get access back t
 Retrieve the document at /NORTH_POLE_Land_Use_Board_Meeting_Minutes.txt. 
 Who recused herself from the vote described on the document?
 ```
+```
+Tanta Kringle rescued herself from the vote.
+```
 Pre Steps
 ```
 tcpdump -nni eth0
