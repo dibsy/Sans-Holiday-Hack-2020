@@ -1,6 +1,7 @@
 # Sans-Holiday-Hack-2020
 Sans Holiday Hack 2020
 
+
 ### 1) Uncover Santa's Gift List
 ```
 There is a photo of Santa's Desk on that billboard with his personal gift list.
