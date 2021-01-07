@@ -448,7 +448,7 @@ chmod 755 extra/DEBIAN/postinst
 dpkg-deb --build extra
 mv extra.deb pub/jfrost/backdoor/suriv_amd64.deb
 ```
-<img src="arp-dns-deb.PNG">
+<img src="images/arp-dns-deb.PNG">
 
 ### 10) Defeat Fingerprint Sensor
 ```
