@@ -32,6 +32,34 @@ sansholidayhack
 kringle2020
 wrapper3000
 
+elf@bfdda91a4256:~/bucket_finder$ ./bucket_finder.rb  wordlist  --download
+http://s3.amazonaws.com/kringlecastle
+Bucket found but access denied: kringlecastle
+http://s3.amazonaws.com/wrapper
+Bucket found but access denied: wrapper
+http://s3.amazonaws.com/santa
+Bucket santa redirects to: santa.s3.amazonaws.com
+http://santa.s3.amazonaws.com/
+        Bucket found but access denied: santa
+http://s3.amazonaws.com/Wrapper3000
+Bucket does not exist: Wrapper3000
+http://s3.amazonaws.com/kringle
+Bucket kringle redirects to: kringle.s3.amazonaws.com
+http://kringle.s3.amazonaws.com/
+        Bucket Found: kringle ( kringle.s3.amazonaws.com/kringle )
+                <Downloaded> http://kringle.s3.amazonaws.com/create.html
+http://s3.amazonaws.com/kringlecon
+Bucket does not exist: kringlecon
+http://s3.amazonaws.com/holidayhack
+Bucket does not exist: holidayhack
+http://s3.amazonaws.com/sansholidayhack
+Bucket does not exist: sansholidayhack
+http://s3.amazonaws.com/kringle2020
+Bucket does not exist: kringle2020
+http://s3.amazonaws.com/wrapper3000
+Bucket Found: wrapper3000 ( http://s3.amazonaws.com/wrapper3000 )
+        <Downloaded> http://s3.amazonaws.com/wrapper3000/package
+
 base64 -d package > package2
 unzip package2 
 tar xf package.txt.Z.xz.xxd.tar.bz2
